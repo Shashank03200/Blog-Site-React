@@ -1,0 +1,53 @@
+header{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    background-color: darkslateblue;
+    margin: 0px auto;
+    
+}
+
+header .navbar-left{
+    display: inline-flex;
+    align-items: center;
+    padding: 5px;
+    padding-left: 100px;
+}
+
+.navbar-brand{
+    padding: 5px;
+    font-size: 40px;
+    color: white;
+    font-family: Pattaya, Arial, Helvetica, sans-serif;
+
+}
+
+.navbar-left div {
+    display: inline-flex;
+}
+
+.navbar-left a{
+    text-decoration: none;
+}
+
+
+.navbar-logo img{
+    display: inline-flex;
+    height: 40px;
+    width: 40px;
+    border: 5px solid black;
+    border-radius: 50%;
+    
+    
+}
+
+header .navbar-right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 40px;
+}
+
+.navbar-right button{
+    margin:auto 20px;
+    font: 16px Roboto, sans-serif;
+}

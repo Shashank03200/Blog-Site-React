@@ -1,0 +1,15 @@
+.Container{
+    margin: 50px auto;
+    border: 6px solid blue;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.postBtnDiv {
+    font-family: Roboto, Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    text-align: center;
+}
+.ContainerTitle{
+    display: grid;
+    grid-template-columns: 90% 10%; 
+}

@@ -1,0 +1,39 @@
+.AuthContainer{
+    margin: 50px auto;
+    width: 80vh;
+    border: 6px solid blue;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.SubmitButtonDiv{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.SubmitButton{
+    width: 30%;
+    font-family: 'Open Sans', Consolas;   
+}
+
+.FormGroup
+{
+    font-size: larger;
+    margin: 30px;
+}
+
+h2{
+    text-align: center;
+    font-family: Roboto, sans-serif;
+    font-weight: 600;
+}
+
+p{
+    text-align: center;   
+}
+
+.ErrorText{
+    color: red;
+}

@@ -1,0 +1,7 @@
+.NewButton{
+    margin:20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
