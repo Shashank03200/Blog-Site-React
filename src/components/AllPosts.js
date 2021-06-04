@@ -9,28 +9,30 @@ import AuthContext from '../store/auth-context';
 
 const AllPosts = () => {
 
-    const [posts, setPosts] = useSTate([]);
+    const [posts, setPosts] = useState([]);
     const { userId } = useContext(AuthContext);
+    console.log(userId);
+    useEffect(() => {
+        async function getAllPosts() {
+            const response = await fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json');
+            const posts = await response.json();
 
+            const initialPosts = [];
+            // data is the object posts
+            for (const post in posts) {
 
-
-    useEffect(async function getAllPosts() {
-        const response = await fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json');
-        const posts = await response.json();
-
-        const initialPosts = [];
-        // data is the object posts
-        for (const post in posts) {
-
-            if (posts[post].userId === userId) {
-                const postObject = {
-                    postId: post,
-                    postData: posts[post]
+                if (posts[post].userId === userId) {
+                    const postObject = {
+                        postId: post,
+                        postData: posts[post]
+                    }
+                    initialPosts.push(postObject);
                 }
-                initialPosts.push(postObject);
             }
+            setPosts(initialPosts)
         }
-        getAllPosts()
+
+        getAllPosts();
     }, [])
 
 

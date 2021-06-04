@@ -16,11 +16,13 @@ export const AuthContextProvider = (props) => {
     const initialToken = localStorage.getItem('idToken');
     const initialId = localStorage.getItem('userId');
 
-    const [token, setToken] = useState(initialToken);
+    const [authData, setAuthData] = useState({
+        idToken: initialToken,
+        userId: initialId
+    });
 
-    const isLoggedIn = !!token;
+    const isLoggedIn = !!authData.idToken;
 
-    const [userId, setUserId] = useState(initialId);
     const [isButtonVisible, setIsButtonVisible] = useState(false)
 
     useEffect(() => {
@@ -32,16 +34,21 @@ export const AuthContextProvider = (props) => {
     }, [isLoggedIn])
 
     function loginHandler(localId, idToken) {
-        setToken(idToken);
-        localStorage.setItem('userId', localId)
-        setUserId(localId)
-        localStorage.setItem('idToken', idToken);
 
+        localStorage.setItem('idToken', idToken);
+        localStorage.setItem('userId', localId);
+
+        setAuthData({
+            idToken: idToken,
+            userId: localStorage
+        })
     }
 
     function logoutHandler() {
-        setToken(null);
-        setUserId(null);
+        setAuthData({
+            idToken: null,
+            userId: null
+        })
         localStorage.removeItem('userId')
         localStorage.removeItem('idToken')
     }
@@ -53,7 +60,7 @@ export const AuthContextProvider = (props) => {
 
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, userId, token, isButtonVisible, loginHandler, logoutHandler, setNewBtnState }}>
+        <AuthContext.Provider value={{ isLoggedIn, userId: authData.userId, token: authData.idToken, isButtonVisible, loginHandler, logoutHandler, setNewBtnState }}>
             {props.children}
         </AuthContext.Provider>
     )
