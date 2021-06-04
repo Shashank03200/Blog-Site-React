@@ -9,30 +9,31 @@ import AuthContext from '../store/auth-context';
 
 const AllPosts = () => {
 
-    const [posts, setPosts] = useState([])
+    let posts = []
     const { userId } = useContext(AuthContext);
 
-    console.log('Rendered All Posts')
 
 
-    fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json')
-        .then(response => response.json())
-        .then(posts => {
-            const initialPosts = [];
-            // data is the object posts
-            for (const post in posts) {
+    useEffect(() => {
+        fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json')
+            .then(response => response.json())
+            .then(posts => {
+                const initialPosts = [];
+                // data is the object posts
+                for (const post in posts) {
 
-                if (posts[post].userId === userId) {
-                    const postObject = {
-                        postId: post,
-                        postData: posts[post]
+                    if (posts[post].userId === userId) {
+                        const postObject = {
+                            postId: post,
+                            postData: posts[post]
+                        }
+                        initialPosts.push(postObject);
                     }
-                    initialPosts.push(postObject);
                 }
-            }
-            console.log(initialPosts)
-            setPosts(initialPosts)
-        })
+                console.log(initialPosts)
+                posts = initialPosts;
+            })
+    }, [posts])
 
 
     let postList = <p>Loading...</p>
