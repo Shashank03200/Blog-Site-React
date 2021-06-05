@@ -57,7 +57,7 @@ function App() {
           </Route>
         }
         <Route path="*">
-          <Redirect to="/signup" />
+          <Redirect to="/login" />
         </Route>
       </Switch>
     </Fragment>
