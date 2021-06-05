@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Card, Button, Container } from 'react-bootstrap';
 
@@ -9,49 +9,47 @@ import AuthContext from '../store/auth-context';
 
 const AllPosts = () => {
 
-    const [posts, setPosts] = useState([]);
+    let [posts, setPosts] = useState();
+    const [isLoading, setIsLoading] = useState(true);
     const { userId } = useContext(AuthContext);
 
-    useEffect(() => {
-        async function getAllPosts() {
-            const response = await fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json');
-            const posts = await response.json();
-            return posts;
-        }
 
-        getAllPosts().then(posts => {
+    useEffect(() => {
+
+        (async () => {
+            const response = await fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json');
+            const data = await response.json();
             const initialPosts = [];
-            // data is the object posts
-            for (const post in posts) {
+            for (const post in data) {
                 console.log('Fetching posts ')
-                if (posts[post].userId === userId) {
+                if (data[post].userId === userId) {
                     const postObject = {
                         postId: post,
-                        postData: posts[post]
+                        postData: data[post]
                     }
                     initialPosts.push(postObject);
                 }
             }
-            console.log('Setting Posts');
             setPosts(initialPosts);
-            console.log('New posts set');
-        })
-    }, [])
+            setIsLoading(false)
+        })();
 
+    }, []);
 
+    console.log(posts)
     console.log('setting posts to loading')
-    let postList = <p>Loading...</p>
-    if (posts.length > 0) {
-        postList = (
-            posts.map(post => {
-                return (<PostItem key={post.postId} postData={post.postData} postId={post.postId} />)
-            })
-        )
-    }
 
     return (
         <Container>
-            {postList}
+            {
+                isLoading ? <p>Loading...</p> :
+                    posts.map(post => {
+                        return (<PostItem key={post.postId} postData={post.postData} postId={post.postId} />)
+                    })
+            }
+            {
+                posts && posts.length === 0 && <p>Vamm</p>
+            }
         </Container>
     );
 }

@@ -47,6 +47,7 @@ export const AuthContextProvider = (props) => {
     function logoutHandler() {
         setAuthData(prevState => {
             return {
+                ...prevState,
                 idToken: null,
                 userId: null
             }
