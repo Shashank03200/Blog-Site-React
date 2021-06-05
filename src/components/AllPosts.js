@@ -11,12 +11,13 @@ const AllPosts = () => {
 
     let [posts, setPosts] = useState();
     const [isLoading, setIsLoading] = useState(true);
-    const { userId } = useContext(AuthContext);
+    const authCtx = useContext(AuthContext);
+    const { userId } = authCtx;
 
 
-    useEffect(() => {
+    useEffect(
 
-        (async () => {
+        async () => {
             const response = await fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json');
             const data = await response.json();
             const initialPosts = [];
@@ -31,13 +32,9 @@ const AllPosts = () => {
                 }
             }
             setPosts(initialPosts);
-            setIsLoading(false)
-        })();
+            setIsLoading(false);
+        }, []);
 
-    }, []);
-
-    console.log(posts)
-    console.log('setting posts to loading')
 
     return (
         <Container>

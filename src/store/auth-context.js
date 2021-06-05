@@ -36,11 +36,13 @@ export const AuthContextProvider = (props) => {
     function loginHandler(localId, idToken) {
 
         localStorage.setItem('idToken', idToken);
-        localStorage.setItem('userId', localId);
 
-        setAuthData({
-            idToken: idToken,
-            userId: localStorage
+        setAuthData(prevState => {
+            return {
+                ...prevState,
+                idToken: idToken,
+                userId: localId
+            }
         })
     }
 

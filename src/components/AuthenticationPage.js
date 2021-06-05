@@ -60,6 +60,7 @@ const AuthenticationPage = (props) => {
                 errorMessage = data.error.message
                 alert(errorMessage)
             } else {
+                localStorage.setItem('userId', data.localId)
                 authCtx.loginHandler(data.localId, data.idToken);
                 history.push(`/${data.localId}/posts`)
             }
