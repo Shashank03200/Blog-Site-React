@@ -20,7 +20,6 @@ export const AuthContextProvider = (props) => {
         idToken: initialToken,
         userId: initialId
     });
-
     const isLoggedIn = !!authData.idToken;
 
     const [isButtonVisible, setIsButtonVisible] = useState(false)
@@ -32,6 +31,7 @@ export const AuthContextProvider = (props) => {
             setIsButtonVisible(false)
         }
     }, [isLoggedIn])
+
 
     function loginHandler(localId, idToken) {
 
@@ -45,9 +45,11 @@ export const AuthContextProvider = (props) => {
     }
 
     function logoutHandler() {
-        setAuthData({
-            idToken: null,
-            userId: null
+        setAuthData(prevState => {
+            return {
+                idToken: null,
+                userId: null
+            }
         })
         localStorage.removeItem('userId')
         localStorage.removeItem('idToken')

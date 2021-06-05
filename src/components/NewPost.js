@@ -1,6 +1,6 @@
 import classes from "./NewPost.module.css";
 import { Container, Form, Button } from "react-bootstrap";
-import { Redirect, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { useContext, useState, useRef } from 'react';
 
 import AuthContext from '../store/auth-context.js'
@@ -9,7 +9,7 @@ const NewPost = (props) => {
 
     const titleInputRef = useRef();
     const contentInputRef = useRef();
-    const [isLoading, setIsLoading] = useState(false);
+
 
     const authCtx = useContext(AuthContext);
     const history = useHistory();

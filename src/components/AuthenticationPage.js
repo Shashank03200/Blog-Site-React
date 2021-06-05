@@ -1,4 +1,4 @@
-import { Form, Button, Container, Col } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import { useRef, useContext, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
@@ -28,7 +28,7 @@ const AuthenticationPage = (props) => {
         const password = passwordInputRef.current.value;
         setIsLoading(true);
         let authURL = '';
-        if (method == 'Sign up') {
+        if (method === 'Sign up') {
             authURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDSplRafoXJxfUlQxItCDlr2cr3pRfcu0U'
         } else {
             authURL = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDSplRafoXJxfUlQxItCDlr2cr3pRfcu0U'
