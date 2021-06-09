@@ -39,18 +39,18 @@ const NavigationBar = (props) => {
 
                 {isLoggedIn &&
                     <Fragment>
+
                         {authCtx.isButtonVisible &&
-                            <Button variant="success" className={classes.NewButton} size="lg" onClick={newButtonHandler}>Create New Post</Button>}
+                            <Button variant="success" className={classes.NewPostButton} size="lg" onClick={newButtonHandler}>Create New Post</Button>}
                         <Dropdown>
 
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                <UserIcon />
+                            <Dropdown.Toggle variant="success" id="dropdown-basic" size="lg">
+                                <UserIcon /><span className={classes.userEmail}>{authCtx.email}</span>
                             </Dropdown.Toggle>
 
                             <Dropdown.Menu>
-                                <Dropdown.Item className="UserButtonActionItem">Profile</Dropdown.Item>
                                 <Dropdown.Item className="UserButtonActionItem" onClick={() => authCtx.logoutHandler()}>Logout</Dropdown.Item>
-                                <Dropdown.Item className="UserButtonActionItem">Change Password</Dropdown.Item>
+                                <Dropdown.Item className="UserButtonActionItem"> <Link to={"/" + authCtx.userId + "/resetPassword"} className={classes.passwordChangeBtnLink}>Change Password</Link></Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Fragment>

@@ -60,8 +60,9 @@ const AuthenticationPage = (props) => {
                 errorMessage = data.error.message
                 alert(errorMessage)
             } else {
+
                 localStorage.setItem('userId', data.localId)
-                authCtx.loginHandler(data.localId, data.idToken);
+                authCtx.loginHandler(data.localId, data.idToken, data.email);
                 history.push(`/${data.localId}/posts`)
             }
         }).catch((error) => {
@@ -88,7 +89,7 @@ const AuthenticationPage = (props) => {
 
     return (
         <Container className={classes.AuthContainer}>
-            <h2>{method}</h2>
+            <h2 className={classes.authMethod}>{method}</h2>
             <Form onSubmit={authFormSubmitHandler}>
                 {/* {
                     method === 'Sign up' &&

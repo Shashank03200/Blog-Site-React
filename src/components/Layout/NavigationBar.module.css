@@ -10,7 +10,7 @@ header .navbar-left{
     display: inline-flex;
     align-items: center;
     padding: 5px;
-    padding-left: 100px;
+    padding-left: 200px;
 }
 
 .navbar-brand{
@@ -44,10 +44,19 @@ header .navbar-right{
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 40px;
+    padding-right: 200px;
 }
 
 .navbar-right button{
     margin:auto 20px;
     font: 16px Roboto, sans-serif;
+}
+
+.NewPostButton{
+padding: 16px;
+}
+
+.passwordChangeBtnLink:link{
+    text-decoration: none; 
+    color:inherit; 
 }

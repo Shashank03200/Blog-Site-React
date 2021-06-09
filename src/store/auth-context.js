@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext({
+    email: '',
     isLoggedIn: false,
     userId: null,
     token: null,
@@ -15,13 +16,14 @@ export const AuthContextProvider = (props) => {
 
     const initialToken = localStorage.getItem('idToken');
     const initialId = localStorage.getItem('userId');
+    const initialEmail = localStorage.getItem('email');
 
     const [authData, setAuthData] = useState({
         idToken: initialToken,
         userId: initialId
     });
     const isLoggedIn = !!authData.idToken;
-
+    const [email, setEmail] = useState(initialEmail);
     const [isButtonVisible, setIsButtonVisible] = useState(false)
 
     useEffect(() => {
@@ -33,17 +35,18 @@ export const AuthContextProvider = (props) => {
     }, [isLoggedIn])
 
 
-    function loginHandler(localId, idToken) {
+    function loginHandler(localId, idToken, email) {
 
         localStorage.setItem('idToken', idToken);
-
+        localStorage.setItem('email', email)
         setAuthData(prevState => {
             return {
                 ...prevState,
                 idToken: idToken,
                 userId: localId
             }
-        })
+        });
+        setEmail(email);
     }
 
     function logoutHandler() {
@@ -54,8 +57,10 @@ export const AuthContextProvider = (props) => {
                 userId: null
             }
         })
-        localStorage.removeItem('userId')
-        localStorage.removeItem('idToken')
+        setEmail(null);
+        localStorage.removeItem('userId');
+        localStorage.removeItem('idToken');
+        localStorage.removeItem('email');
     }
 
     function setNewBtnState(btnProp) {
@@ -65,7 +70,7 @@ export const AuthContextProvider = (props) => {
 
 
     return (
-        <AuthContext.Provider value={{ isLoggedIn, userId: authData.userId, token: authData.idToken, isButtonVisible, loginHandler, logoutHandler, setNewBtnState }}>
+        <AuthContext.Provider value={{ isLoggedIn, userId: authData.userId, token: authData.idToken, email, isButtonVisible, loginHandler, logoutHandler, setNewBtnState }}>
             {props.children}
         </AuthContext.Provider>
     )

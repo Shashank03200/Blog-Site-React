@@ -1,0 +1,20 @@
+.Container{
+    
+    text-align: justify;
+}
+
+.PostTitle{
+    background-color: darkblue;
+    color: white;
+    font-size: 30px;
+    font-weight: black;
+    padding: 40px 200px;
+}
+
+.PostContent{
+    padding: 60px 200px;
+    font-size: 20px;
+    background-color: gray;
+    color: white;
+}
+

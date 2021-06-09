@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
 
 import classes from './HighlightedPost.module.css';
 import { useParams } from 'react-router-dom';
@@ -24,10 +23,11 @@ const HighlightedPost = () => {
     }, [])
 
     return (
-        <Container >
-            <div className={classes.PostTitle}><h2>{post.title}</h2></div>
-            <div className={classes.PostContent}><h4>{post.content}</h4></div>
-        </Container>
+        <div className={classes.Container}>
+
+            <div className={classes.PostTitle}>{post.title}</div>
+            <div className={classes.PostContent}>{post.content}</div>
+        </div>
     );
 }
 

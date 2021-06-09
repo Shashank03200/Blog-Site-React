@@ -1,15 +1,16 @@
 
 import './App.css';
-import HomePage from './components/HomePage';
-import Layout from './components/Layout/Layout';
-import AuthenticationPage from './components/AuthenticationPage';
-import NewPost from './components/NewPost'
-
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, Suspense } from 'react';
 import AuthContext from './store/auth-context';
-import AllPosts from './components/AllPosts';
-import HighlightedPost from './components/HighlightedPost'
+
+const HomePage = React.lazy(() => import('./components/HomePage'));
+const Layout = React.lazy(() => import('./components/Layout/Layout'));
+const AuthenticationPage = React.lazy(() => import('./components/AuthenticationPage'));
+const NewPost = React.lazy(() => import('./components/NewPost'));
+const AllPosts = React.lazy(() => import('./components/AllPosts'));
+const HighlightedPost = React.lazy(() => import('./components/HighlightedPost'));
+const ResetPassword = React.lazy(() => import('./components/ResetPassword'));
 
 function App() {
 
@@ -18,7 +19,7 @@ function App() {
   const { isLoggedIn } = authCtx;
 
   return (
-    <Fragment>
+    <Suspense fallback="Loading.">
       <Layout />
       <Switch>
         <Route path="/" exact>
@@ -26,12 +27,12 @@ function App() {
           {!isLoggedIn && <HomePage />}
         </Route>
 
-        {!isLoggedIn &&
-          <Route path="/login">
-            {!isLoggedIn && <AuthenticationPage method="login" />}
-            {isLoggedIn && <Redirect to={"/" + authCtx.userId + "/posts"} />}
-          </Route>
-        }
+
+        <Route path="/login">
+          {!isLoggedIn && <AuthenticationPage method="login" />}
+          {isLoggedIn && <Redirect to={"/" + authCtx.userId + "/posts"} />}
+        </Route>
+
 
         <Route path="/signup">
           {!isLoggedIn && <AuthenticationPage method="signup" />}
@@ -41,15 +42,20 @@ function App() {
 
         <Route path="/:userId/new-post">
           {isLoggedIn && <NewPost />}
-          {!isLoggedIn && <Redirect to="/signup" />}
+          {!isLoggedIn && <Redirect to="/login" />}
         </Route>
 
-        {isLoggedIn &&
-          <Route path="/:userId/posts" exact>
-            {isLoggedIn && <AllPosts />}
-            {!isLoggedIn && <Redirect to="/signup" />}
-          </Route>
-        }
+        <Route path="/:userId/resetPassword">
+          {isLoggedIn && <ResetPassword />}
+          {!isLoggedIn && <Redirect to="/login" />}
+        </Route>
+
+
+        <Route path="/:userId/posts" exact>
+          {isLoggedIn && <AllPosts />}
+          {!isLoggedIn && <Redirect to="/login" />}
+        </Route>
+
 
         {isLoggedIn &&
           <Route path={'/:userId/posts/:postId'}>
@@ -60,7 +66,7 @@ function App() {
           <Redirect to="/login" />
         </Route>
       </Switch>
-    </Fragment>
+    </Suspense>
 
   );
 }

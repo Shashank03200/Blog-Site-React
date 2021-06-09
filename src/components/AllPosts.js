@@ -45,7 +45,7 @@ const AllPosts = () => {
                     })
             }
             {
-                posts && posts.length === 0 && <p>Vamm</p>
+                posts && posts.length === 0 && <p>No posts found. Create one!</p>
             }
         </Container>
     );
