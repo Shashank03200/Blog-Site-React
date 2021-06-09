@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { Route } from 'react-router-dom';
 import { Card, Button, Container } from 'react-bootstrap';
 
+import Spinner from './Spinner';
+
 import PostItem from './PostItem';
 import classes from './AllPosts.module.css';
 
@@ -39,7 +41,7 @@ const AllPosts = () => {
     return (
         <Container>
             {
-                isLoading ? <p>Loading...</p> :
+                isLoading ? <Spinner /> :
                     posts.map(post => {
                         return (<PostItem key={post.postId} postData={post.postData} postId={post.postId} />)
                     })
