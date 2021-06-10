@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import { Card, Button, Container } from 'react-bootstrap';
 
 import Spinner from './Spinner';
@@ -16,38 +16,54 @@ const AllPosts = () => {
     const authCtx = useContext(AuthContext);
     const { userId } = authCtx;
 
-
-    useEffect(
-
-        async () => {
-            const response = await fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json');
-            const data = await response.json();
-            const initialPosts = [];
-            for (const post in data) {
-                console.log('Fetching posts ')
-                if (data[post].userId === userId) {
-                    const postObject = {
-                        postId: post,
-                        postData: data[post]
-                    }
-                    initialPosts.push(postObject);
+    const fetchPosts = async () => {
+        const response = await fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json');
+        const data = await response.json();
+        const initialPosts = [];
+        console.log('useEffect called');
+        for (const post in data) {
+            console.log('Fetching posts ')
+            if (data[post].userId === userId) {
+                const postObject = {
+                    postId: post,
+                    postData: data[post]
                 }
+                initialPosts.push(postObject);
             }
-            setPosts(initialPosts);
-            setIsLoading(false);
-        }, []);
+        }
+        setPosts(initialPosts.reverse());
+        setIsLoading(false);
+    }
+
+    useEffect(fetchPosts, []);
+
+
+    const postDeleteHandler = (postId) => {
+        fetch(`https://blog-app-8981b-default-rtdb.firebaseio.com/posts/${postId}.json`, { method: 'DELETE' })
+            .then(response => response.json())
+            .then(data => {
+                if (data === null) {
+
+                    fetchPosts();
+                }
+            })
+            .catch(err => {
+                alert(err);
+            })
+
+    }
 
 
     return (
-        <Container>
+        <Container className={classes.AllPostsContainer}>
             {
                 isLoading ? <Spinner /> :
                     posts.map(post => {
-                        return (<PostItem key={post.postId} postData={post.postData} postId={post.postId} />)
+                        return (<PostItem key={post.postId} postData={post.postData} postId={post.postId} onDelete={() => postDeleteHandler(post.postId)} />)
                     })
             }
             {
-                posts && posts.length === 0 && <p>No posts found. Create one!</p>
+                posts && posts.length === 0 && <p style={{ textAlign: 'center' }}>No posts found. Create one!</p>
             }
         </Container>
     );

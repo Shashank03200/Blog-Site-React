@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import React, { Fragment, useContext, Suspense } from 'react';
 import AuthContext from './store/auth-context';
 
+import Spinner from './components/Spinner';
 const HomePage = React.lazy(() => import('./components/HomePage'));
 const Layout = React.lazy(() => import('./components/Layout/Layout'));
 const AuthenticationPage = React.lazy(() => import('./components/AuthenticationPage'));
@@ -19,7 +20,7 @@ function App() {
   const { isLoggedIn } = authCtx;
 
   return (
-    <Suspense fallback="Loading.">
+    <Suspense fallback={<Spinner />} >
       <Layout />
       <Switch>
         <Route path="/" exact>
@@ -66,7 +67,7 @@ function App() {
           <Redirect to="/login" />
         </Route>
       </Switch>
-    </Suspense>
+    </Suspense >
 
   );
 }

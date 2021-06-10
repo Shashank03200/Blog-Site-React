@@ -20,7 +20,8 @@ const HighlightedPost = () => {
                 console.log(postObject);
                 setPost(postObject)
             })
-    }, [])
+    }, []);
+
 
     return (
         <div className={classes.Container}>

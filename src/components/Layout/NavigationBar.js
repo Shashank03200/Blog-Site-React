@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import UserIcon from './UserIcon';
 import Dropdown from 'react-bootstrap/Dropdown'
@@ -13,7 +13,8 @@ const NavigationBar = (props) => {
 
     const authCtx = useContext(AuthContext);
     const history = useHistory();
-
+    const location = useLocation();
+    console.log(location.pathname);
     const { isLoggedIn } = authCtx;
 
     const newButtonHandler = () => {
@@ -40,7 +41,7 @@ const NavigationBar = (props) => {
                 {isLoggedIn &&
                     <Fragment>
 
-                        {authCtx.isButtonVisible &&
+                        {authCtx.isButtonVisible && location.pathname !== '/' + authCtx.userId + "/new-post" &&
                             <Button variant="success" className={classes.NewPostButton} size="lg" onClick={newButtonHandler}>Create New Post</Button>}
                         <Dropdown>
 

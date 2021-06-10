@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react';
 import Button from 'react-bootstrap/Button'
-import { Route, Redirect } from 'react-router';
+import { Link, Route, Redirect } from 'react-router-dom';
 
 import AuthContext from '../store/auth-context';
 import classes from './HomePage.module.css';
@@ -31,7 +31,7 @@ const HomePage = (props) => {
 
             </div>
                 <div className={classes.ctaButton}>
-                    <Button variant="primary" size="lg" >Start Now</Button>
+                    <Link to="/signup"><Button variant="primary" size="lg" >Start Now</Button></Link>
                 </div>
             </main>
         </section>

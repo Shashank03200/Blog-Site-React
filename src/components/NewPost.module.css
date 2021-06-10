@@ -12,4 +12,22 @@
 .ContainerTitle{
     display: grid;
     grid-template-columns: 90% 10%; 
+    margin:20px auto;
+    margin-left: 60px;
+}
+
+.NewPostHeading{
+    text-align: center;
+}
+
+.PostTitleInputBox{
+    font-size: 24px;
+    font-family: 'Merriweather';
+    
+}
+
+.PostTextInputBox{
+    font-size: 18px;
+    font-family: 'Roboto';
+    color:#231e23
 }

@@ -50,17 +50,17 @@ const NewPost = (props) => {
     return (
         <Container className={classes.Container}>
             <div className={classes.ContainerTitle}>
-                <h2>Create a new blog</h2>
+                <h2 className={classes.NewPostHeading}>Create a new blog</h2>
                 <Button variant="danger" onClick={newPostCancelHandler}>Cancel</Button>
             </div>
             <Form onSubmit={formSubmitHandler}>
                 <Form.Group>
                     <Form.Label>Title</Form.Label>
-                    <Form.Control size="lg" type="text" ref={titleInputRef} />
+                    <Form.Control className={classes.PostTitleInputBox} size="lg" type="text" ref={titleInputRef} />
                 </Form.Group>
                 <Form.Group controlId="exampleForm.ControlTextarea1">
                     <Form.Label>Text</Form.Label>
-                    <Form.Control as="textarea" rows={10} size="lg" ref={contentInputRef} />
+                    <Form.Control as="textarea" className={classes.PostTextInputBox} rows={10} size="lg" ref={contentInputRef} />
                 </Form.Group>
                 <div className={classes.postBtnDiv}>
                     <Button variant="primary" size="lg" onClick={formSubmitHandler} >Post</Button>

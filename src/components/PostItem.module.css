@@ -1,3 +1,47 @@
-.LeftAlignment{
-    text-align: left;
+.Card{
+    width: 60%;
+    padding: 30px 16px;
+    margin:50px auto;
+    box-shadow: 2px 5px 14px;
+    border-radius: 16px;
+    background-color: #effcef;
+    animation: cardEnter 0.6s ease-in-out none;
+}
+
+@keyframes cardEnter{
+    from{
+        margin-left: 0px;
+    }to{
+        margin-left: 220px;
+    }
+}
+
+.CardTitle{
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Merriweather', 'Times New Roman', Times, serif;
+    overflow: hidden;
+    color: #483D8B;
+}
+
+.CardText{
+    font-size: 20px;
+    font-family: 'Roboto', Consolas;
+    margin:10px auto;
+    color: rgb(83, 173, 117);
+}
+
+.PostActionButtonDiv{
+    padding: 20px 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.PostActionButtonDiv Button{
+    background-color: #483D8B;
+    border-color: #3827a0;
+}
+
+.DeletePostButton:hover{
+    background-color: rgb(255, 0, 0);
 }
