@@ -1,11 +1,11 @@
 .Card{
     width: 60%;
-    padding: 30px 16px;
     margin:50px auto;
     box-shadow: 2px 5px 14px;
     border-radius: 16px;
     background-color: #effcef;
     animation: cardEnter 0.6s ease-in-out none;
+    
 }
 
 @keyframes cardEnter{
@@ -16,19 +16,35 @@
     }
 }
 
+.Card .innerLayer{
+    width: 100%;
+    margin: 0;
+    border-radius: 16px;
+    padding: 30px 16px;
+    background:rgba(0,0,0,0.6);
+    transition: all 0.4s;
+    -webkit-transition: all 0.4s;
+}
+
+.Card .innerLayer:hover {
+    background:rgba(0,0,0,0.4);
+    
+    opacity: 1;
+}
+
 .CardTitle{
     font-size: 30px;
     font-weight: bold;
     font-family: 'Merriweather', 'Times New Roman', Times, serif;
     overflow: hidden;
-    color: #483D8B;
+    color: #ffeda3;
 }
 
 .CardText{
     font-size: 20px;
     font-family: 'Roboto', Consolas;
     margin:10px auto;
-    color: rgb(83, 173, 117);
+    color: #fff5fd;
 }
 
 .PostActionButtonDiv{
@@ -40,6 +56,10 @@
 .PostActionButtonDiv Button{
     background-color: #483D8B;
     border-color: #3827a0;
+}
+
+.EditPostButton:hover{
+    background-color: darksalmon;
 }
 
 .DeletePostButton:hover{

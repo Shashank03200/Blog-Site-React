@@ -1,8 +1,8 @@
 
 import classes from './ResetPassword.module.css';
 import { Form, Button, Container } from "react-bootstrap";
-import { useRef, useContext, useState } from 'react';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { useRef, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 
 
 import AuthContext from './../store/auth-context';
@@ -18,7 +18,7 @@ const ResetPassword = (props) => {
         event.preventDefault();
         const firstPassword = firstPasswordInputRef.current.value;
         const secondPassword = secondPasswordInputRef.current.value;
-        if (firstPassword != secondPassword) {
+        if (firstPassword !== secondPassword) {
             alert('Passwords do not match.')
             return;
         }
@@ -34,7 +34,7 @@ const ResetPassword = (props) => {
         })
             .then(response => response.json())
             .then(data => {
-                console.log(data);
+
                 alert('Password changed!\nLogin Again to verify.');
                 authCtx.logoutHandler();
                 <Redirect to="/login" />

@@ -1,7 +1,9 @@
 import { createContext, useEffect, useState } from 'react';
+// import { useHistory } from 'react-router-dom';
+import firebase from 'firebase';
 
 const AuthContext = createContext({
-    email: '',
+    currentUser: '',
     isLoggedIn: false,
     userId: null,
     token: null,
@@ -14,16 +16,18 @@ const AuthContext = createContext({
 
 export const AuthContextProvider = (props) => {
 
+    // const history = useHistory();
     const initialToken = localStorage.getItem('idToken');
     const initialId = localStorage.getItem('userId');
-    const initialEmail = localStorage.getItem('email');
+    const initialUser = JSON.parse(localStorage.getItem('currentUser'));
+
 
     const [authData, setAuthData] = useState({
         idToken: initialToken,
         userId: initialId
     });
     const isLoggedIn = !!authData.idToken;
-    const [email, setEmail] = useState(initialEmail);
+    const [currentUser, setCurrentUser] = useState(initialUser);
     const [isButtonVisible, setIsButtonVisible] = useState(false)
 
     useEffect(() => {
@@ -35,10 +39,13 @@ export const AuthContextProvider = (props) => {
     }, [isLoggedIn])
 
 
-    function loginHandler(localId, idToken, email) {
+    function loginHandler(localId, idToken, userObj) {
 
+        localStorage.setItem('userId', localId)
         localStorage.setItem('idToken', idToken);
-        localStorage.setItem('email', email)
+
+        localStorage.setItem('currentUser', JSON.stringify(userObj))
+        setCurrentUser(userObj);
         setAuthData(prevState => {
             return {
                 ...prevState,
@@ -46,31 +53,49 @@ export const AuthContextProvider = (props) => {
                 userId: localId
             }
         });
-        setEmail(email);
+
     }
 
-    function logoutHandler() {
-        setAuthData(prevState => {
-            return {
-                ...prevState,
-                idToken: null,
-                userId: null
+    useEffect(() => {
+        const removeUser = async () => {
+            if (!authData.idToken) {
+
+                localStorage.removeItem('userId');
+                localStorage.removeItem('idToken');
+                localStorage.removeItem('currentUser');
+
+                setCurrentUser(null);
+
             }
-        })
-        setEmail(null);
-        localStorage.removeItem('userId');
-        localStorage.removeItem('idToken');
-        localStorage.removeItem('email');
+        }
+        removeUser();
+    }, [authData.idToken])
+
+    function logoutHandler() {
+
+        firebase.auth().signOut().then(() => {
+            // Sign-out successful.
+            setAuthData(prevState => {
+                return {
+                    ...prevState,
+                    idToken: null,
+                    userId: null
+                }
+            })
+        }).catch((error) => {
+            // An error happened.
+        });
+
+
+
     }
 
     function setNewBtnState(btnProp) {
         setIsButtonVisible(btnProp)
     }
 
-
-
     return (
-        <AuthContext.Provider value={{ isLoggedIn, userId: authData.userId, token: authData.idToken, email, isButtonVisible, loginHandler, logoutHandler, setNewBtnState }}>
+        <AuthContext.Provider value={{ isLoggedIn, userId: authData.userId, token: authData.idToken, currentUser, isButtonVisible, loginHandler, logoutHandler, setNewBtnState }}>
             {props.children}
         </AuthContext.Provider>
     )

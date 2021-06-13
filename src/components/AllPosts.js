@@ -17,6 +17,7 @@ const AllPosts = () => {
     const { userId } = authCtx;
 
     const fetchPosts = async () => {
+        authCtx.setNewBtnState(true);
         const response = await fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts.json');
         const data = await response.json();
         const initialPosts = [];

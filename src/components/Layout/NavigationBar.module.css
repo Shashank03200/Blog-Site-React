@@ -1,6 +1,6 @@
 header{
     display: grid;
-    grid-template-columns: 40% 60%;
+    grid-template-columns: 30% 40% 30%;
     background-color: darkslateblue;
     margin: 0px auto;
     box-shadow: 0px 2px 15px;
@@ -45,6 +45,7 @@ header .navbar-right{
     justify-content: flex-end;
     align-items: center;
     padding-right: 200px;
+    
 }
 
 .navbar-right button{
@@ -59,4 +60,19 @@ padding: 16px;
 .passwordChangeBtnLink:link{
     text-decoration: none; 
     color:inherit; 
+}
+
+.navbar-center{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: darkslateblue;
+    
+    
+}
+
+.AllPostsButton, .NewPostButton{
+    font-family: 'Roboto';
+    font-size: 16px;
+    padding: 12px;
 }

@@ -8,12 +8,12 @@ const HighlightedPost = () => {
     const [post, setPost] = useState({});
 
     const params = useParams();
-    console.log(params);
+    
     useEffect(() => {
         fetch('https://blog-app-8981b-default-rtdb.firebaseio.com/posts/' + params.postId + '.json')
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                
                 const postObject = {}
                 postObject['title'] = data.post.title;
                 postObject['content'] = data.post.content;

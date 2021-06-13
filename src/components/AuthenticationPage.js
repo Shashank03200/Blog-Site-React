@@ -4,6 +4,10 @@ import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../store/auth-context';
 import classes from './AuthenticationPage.module.css';
 
+import firebase from 'firebase';
+
+
+
 const AuthenticationPage = (props) => {
 
     const authCtx = useContext(AuthContext);
@@ -18,6 +22,40 @@ const AuthenticationPage = (props) => {
         method = 'Sign up'
     } else if (props.method === 'login') {
         method = 'Log In'
+    }
+
+
+
+    const googleSignInHandler = () => {
+
+        var provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+
+        firebase.auth()
+            .signInWithPopup(provider)
+            .then((result) => {
+                /** @type {firebase.auth.OAuthCredential} */
+                var idToken = result.credential.accessToken;
+                var userId = result.user.uid;
+                var user = result.user;
+                const newUser = {
+                    displayName: user.displayName,
+                    photoURL: user.photoURL,
+                    email: user.email
+                }
+                authCtx.loginHandler(user.uid, idToken, newUser)
+                history.push(`/${user.uid}/posts`)
+
+            }).catch((error) => {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
+            });
     }
 
     const authFormSubmitHandler = (event) => {
@@ -54,15 +92,20 @@ const AuthenticationPage = (props) => {
         }
 
         submitCredentials().then((data) => {
-            console.log(data);
+            
             let errorMessage = 'Authetication failed!';
             if (data && data.error && data.error.message) {
                 errorMessage = data.error.message
                 alert(errorMessage)
             } else {
 
-                localStorage.setItem('userId', data.localId)
-                authCtx.loginHandler(data.localId, data.idToken, data.email);
+                const newUser = {
+                    displayName: '',
+                    photoURL: '',
+                    email: data.email
+                }
+
+                authCtx.loginHandler(data.localId, data.idToken, newUser);
                 history.push(`/${data.localId}/posts`)
             }
         }).catch((error) => {
@@ -121,8 +164,20 @@ const AuthenticationPage = (props) => {
             {method === 'Sign up' && <p>Already a blogger ? <br /><Link to="/login">Login</Link></p>}
             {method === "Log In" && <p>New user ?  <br /><Link to="/signup">Sign up</Link></p>}
 
+            <div className={classes.SubmitButtonDiv}>
+                <button className={classes.GoogleSignInButton} onClick={googleSignInHandler}>
+                    <span className={classes.GoogleIconContainer}>
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" />
+                    </span>
+                    <span className={classes.GoogleSignInText} >
+                        Sign in with Google
+                </span>
+                </button>
+            </div>
 
         </Container>
+
+
     );
 }
 
